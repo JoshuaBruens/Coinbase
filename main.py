@@ -31,6 +31,7 @@ if __name__ == '__main__':
     account_balance_pnl = fund_management.get_pnl(account_balance_eur)
     account_balance_fess = fund_management.get_fees()
 
+    print('Account summary in coin currency:')
     for coin_currency in account_balance_coin_currency:
         print(f'{coin_currency} : {account_balance_coin_currency[coin_currency]}')
 
