@@ -1,5 +1,3 @@
-from typing import Dict, Any
-
 import coinbasepro as cbp
 from coinbasepro.exceptions import CoinbaseAPIError
 
@@ -41,9 +39,7 @@ class CoinbaseConnection:
                     account_balance_eur[coin_currency] = account_balance_currency[coin_currency]
                 elif coin_currency == DAI:
                     spot = self.public_connection.get_product_ticker('ETH-DAI')
-                    #self.__ETH_EUR
-                    # (1 / ETH / DAI) * ETH / EUR
-                    spot_price =  (1 / float(spot['price'])) * self.__ETH_EUR
+                    spot_price = (1 / float(spot['price'])) * self.__ETH_EUR
                     account_balance_eur[coin_currency] = account_balance_currency[coin_currency] * spot_price
                 else:
                     spot = self.public_connection.get_product_ticker(coin_currency+'-BTC')
@@ -51,4 +47,5 @@ class CoinbaseConnection:
                     account_balance_eur[coin_currency] = account_balance_currency[coin_currency] * spot_price
             except CoinbaseAPIError:
                 print(f'Could not find balance for {coin_currency + "-BTC"} or !')
+        account_balance_eur['TOTAL'] = sum(account_balance_eur.values())
         return account_balance_eur
